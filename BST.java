@@ -312,4 +312,41 @@ class BST {
  
         printTree(root.left, trunk, false);
     }
+
+    //rotate right
+    private void rotateRight(Node subRoot, Node prev){
+        if(subRoot == null || subRoot.left == null){
+            return;
+        }
+
+        Node temp = subRoot.left;
+        subRoot.left = temp.right;
+        temp.right = subRoot;
+    }
+  
+    //rotate left
+    private void rotateLeft(Node subRoot, Node prev){
+        if(subRoot == null || subRoot.right == null){
+            return;
+        }
+
+        Node temp = subRoot.right;
+        subRoot.right = temp.left;
+        temp.left = subRoot;
+    }
+
+    //height
+    private int getHeight(Node node){
+        if(node == null){
+            return 0;
+        }
+        int left = getHeight(node.left);
+        int right = getHeight(node.right);
+        return Math.max(left, right) + 1;
+    }
+
+    //balance
+    private int getBalance(Node node){
+        return 0;
+    }
 }
