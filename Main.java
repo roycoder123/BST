@@ -71,5 +71,66 @@ public class Main {
        tree4.toString();
        System.out.println("Print Tree: ");
        tree4.printTree();
+
+       //rotate testing
+       BST tree5 = new BST();
+       tree5.insert(10);
+       tree5.insert(11);
+       tree5.insert(12);
+       System.out.println("#6: Before rotate");
+       tree5.toString();
+       System.out.println("Print Tree: ");
+       tree5.printTree();
+       tree5.rotateLeft(tree5.root, null);
+       System.out.println("#6: After rotate");
+       tree5.toString();
+       System.out.println("Print Tree: ");
+       tree5.printTree();
+
+       //rotate testing
+       BST tree6 = new BST();
+       tree6.insert(10);
+       tree6.insert(9);
+       tree6.insert(8);
+       System.out.println("#7: Before rotate");
+       tree6.toString();
+       System.out.println("Print Tree: ");
+       tree6.printTree();
+       tree6.rotateRight(tree6.root, null);
+       System.out.println("#7: After rotate");
+       tree6.toString();
+       System.out.println("Print Tree: ");
+       tree6.printTree();
+       System.out.println();
+
+       //height testing
+        BST tree7 = new BST();
+        tree7.insert(4);
+        tree7.insert(5);
+        tree7.insert(7);
+        tree7.insert(6);
+        System.out.println("Height Testing: ");
+        System.out.println("Print Tree: ");
+        tree7.printTree();
+        System.out.println("Test 1 (should return 0): " + tree7.getHeight(null));
+        System.out.println("Test 2 (should return 4): " + tree7.getHeight(tree7.root));
+        System.out.println("Test 3 (should return 3): " + tree7.getHeight(tree7.root.right));
+        System.out.println("Test 4 (should return 2): " + tree7.getHeight(tree7.root.right.right));
+        System.out.println("Test 5 (should return 1): " + tree7.getHeight(tree7.root.right.right.left));
+
+        //balance testing
+        BST tree8 = new BST();
+        tree8.insert(4);
+        tree8.insert(5);
+        tree8.insert(7);
+        tree8.insert(6);
+        System.out.println("Height Testing: ");
+        System.out.println("Print Tree: ");
+        tree8.printTree();
+        System.out.println("Test 1 (should return 0): " + tree7.getBalance(null));
+        System.out.println("Test 2 (should return 3): " + tree7.getBalance(tree7.root));
+        System.out.println("Test 3 (should return 2): " + tree7.getBalance(tree7.root.right));
+        System.out.println("Test 4 (should return -1): " + tree7.getBalance(tree7.root.right.right));
+        System.out.println("Test 5 (should return 0): " + tree7.getBalance(tree7.root.right.right.left));
     }
 }

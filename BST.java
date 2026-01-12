@@ -314,29 +314,61 @@ class BST {
     }
 
     //rotate right
-    private void rotateRight(Node subRoot, Node prev){
+    //pre-condition: tree is not null
+    //post-condition: right rotation around subroot, then connecting it back to the prev node
+    public void rotateRight(Node subRoot, Node prev){
+        //null check
         if(subRoot == null || subRoot.left == null){
             return;
         }
 
+        //do the rotation
         Node temp = subRoot.left;
         subRoot.left = temp.right;
         temp.right = subRoot;
+
+        //reconnect
+        if(prev == null){
+            root = temp;
+        }
+        else if(prev.left == subRoot){
+            prev.left = temp;
+        }
+        else{
+            prev.right = temp;
+        }
     }
   
     //rotate left
-    private void rotateLeft(Node subRoot, Node prev){
+    //pre-condition: tree is not null
+    //post-condition: left rotation around subroot, then connecting it back to the prev node
+    public void rotateLeft(Node subRoot, Node prev){
+        //null check
         if(subRoot == null || subRoot.right == null){
             return;
         }
 
+        //do the rotation
         Node temp = subRoot.right;
         subRoot.right = temp.left;
         temp.left = subRoot;
+
+        //reconnect
+        if(prev == null){
+            root = temp;
+        }
+        else if(prev.left == subRoot){
+            prev.left = temp;
+        }
+        else{
+            prev.right = temp;
+        }
     }
 
     //height
-    private int getHeight(Node node){
+    //pre condition: tree is not null
+    //post condition: returns number of edges on longest path from node to a leaf
+    public int getHeight(Node node){
         if(node == null){
             return 0;
         }
@@ -346,7 +378,14 @@ class BST {
     }
 
     //balance
-    private int getBalance(Node node){
-        return 0;
+    //pre condition: tree is not null
+    //post condition: returns difference between the height of the right subtree and the left subtree
+    public int getBalance(Node node){
+        if(node == null){
+            return 0;
+        }
+        int right = getHeight(node.right);
+        int left = getHeight(node.left);
+        return right - left;
     }
 }
