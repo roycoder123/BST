@@ -11,23 +11,27 @@ class BST {
     //pre condition: key is not null
     //post condition: calls the private insert function
     void insert(int key){
-       insert(key, root);
+        ArrayList<Node> nodes = new ArrayList<>();
+        insert(key, root, nodes);
+        AVLfix(nodes);
     }
 
     //pre condition: key and node are not null
     //post condition: a new node with value 'key' is inserted into the tree into the correct spot
-    private void insert(int key, Node node){
+    private void insert(int key, Node node, ArrayList<Node> nodes){
+
         if(node == null){
             root = new Node(key);
             return;
         }
+        nodes.add(node);
         if(key < node.key){
             if(node.left == null){
                 node.left = new Node(key);
                 return;
             }
             else{
-                insert(key, node.left);
+                insert(key, node.left, nodes);
             }
         }
         if(key > node.key){
@@ -36,7 +40,7 @@ class BST {
                 return;
             }
             else{
-                insert(key, node.right);
+                insert(key, node.right, nodes);
             }
         }
         return;
@@ -66,12 +70,15 @@ class BST {
     //pre condition: key is not null
     //post condition: calls private remove function
     int remove(int key){
-        return remove(key, root);
+        ArrayList<Node> nodes = new ArrayList<>();
+        int value = remove(key, root, nodes);
+        AVLfix(nodes);
+        return value;
     }
 
     //pre condition: key is not null
     //post condition: removes the node with the value 'key' in the tree according to the 0 child, 1 child, and 2 child cases
-    private int remove(int key, Node node){
+    private int remove(int key, Node node, ArrayList<Node> nodes){
         //isn't-there case
         if(!search(key)){
             return -1;
@@ -82,6 +89,7 @@ class BST {
             //0 children
             if(node.left == null && node.right == null){
                 root = null;
+                nodes.add(root);
                 return 0;
             }
 
@@ -113,6 +121,8 @@ class BST {
         Node parent = root; //parent of the node you are removing
         Node remove = null; //node you are removing
         while(parent != null){
+            nodes.add(parent);
+
             if(parent.left != null && parent.left.key == key){
                 remove = parent.left;
                 break;
@@ -176,11 +186,13 @@ class BST {
                 if(replacement.right == null){
                     replacementparent.left = null;
                     parent.left.key = replacement.key;
+                    nodes.add(replacementparent);
                 }
                 else{
                     while(replacement.right != null){
                         replacementparent = replacement;
                         replacement = replacement.right;
+                        nodes.add(replacementparent);
                     }
                     replacementparent.right = null;
                     parent.left.key = replacement.key;
@@ -193,11 +205,13 @@ class BST {
                 if(replacement.right == null){
                     replacementparent.left = null;
                     parent.right.key = replacement.key;
+                    nodes.add(replacementparent);
                 }
                 else{
                     while(replacement.right != null){
                         replacementparent = replacement;
                         replacement = replacement.right;
+                        nodes.add(replacementparent);
                     }
                     replacementparent.right = null;
                     parent.right.key = replacement.key;
@@ -387,5 +401,30 @@ class BST {
         int right = getHeight(node.right);
         int left = getHeight(node.left);
         return right - left;
+    }
+
+
+    //pre condition: tree is not null
+    //post condition: tree is balanced
+    private void AVLfix(ArrayList<Node> nodes){
+        for(int i = nodes.size() - 1; i >= 0; i--){
+            Node node = nodes.get(i);
+            Node parent = null;
+            if(i > 0){
+                parent = nodes.get(i - 1);
+            }
+            if(getBalance(node) < -1){
+                if(getBalance(node.left) > 0){
+                    rotateLeft(node.left, node);
+                }
+                rotateRight(node, parent);
+            }
+            else if(getBalance(node) > 1){
+                if(getBalance(node.right) < 0){
+                    rotateRight(node.right, node);
+                }
+                rotateLeft(node, parent);
+            }
+        }
     }
 }

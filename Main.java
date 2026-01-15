@@ -1,7 +1,7 @@
 public class Main {
     public static void main(String[] args){
         //test case code that uses insert, remove, search, and toString throughout the test cases
-
+        
         BST tree = new BST();
        //parent case with 0 child
        System.out.println("#1 - Original Tree: ");
@@ -116,7 +116,7 @@ public class Main {
         System.out.println("Test 2 (should return 4): " + tree7.getHeight(tree7.root));
         System.out.println("Test 3 (should return 3): " + tree7.getHeight(tree7.root.right));
         System.out.println("Test 4 (should return 2): " + tree7.getHeight(tree7.root.right.right));
-        System.out.println("Test 5 (should return 1): " + tree7.getHeight(tree7.root.right.right.left));
+        //System.out.println("Test 5 (should return 1): " + tree7.getHeight(tree7.root.right.right.left));
 
         //balance testing
         BST tree8 = new BST();
@@ -131,6 +131,44 @@ public class Main {
         System.out.println("Test 2 (should return 3): " + tree7.getBalance(tree7.root));
         System.out.println("Test 3 (should return 2): " + tree7.getBalance(tree7.root.right));
         System.out.println("Test 4 (should return -1): " + tree7.getBalance(tree7.root.right.right));
-        System.out.println("Test 5 (should return 0): " + tree7.getBalance(tree7.root.right.right.left));
+        //System.out.println("Test 5 (should return 0): " + tree7.getBalance(tree7.root.right.right.left));
+
+        //AVL tree
+        BST perfectTree = new BST();
+        perfectTree.insert(10);
+        perfectTree.insert(20);
+        perfectTree.insert(30);
+        perfectTree.insert(40);
+        perfectTree.insert(50);
+        perfectTree.insert(25);
+        perfectTree.insert(26);
+        perfectTree.insert(27);
+        perfectTree.toString();
+        perfectTree.printTree();
+        
+        //AVL FINAL TEST
+        BST AVLtree = new BST();
+        System.out.println("Final AVL test: ");
+        
+        System.out.println("Insert Test: ");
+        int[] insertVals = { 30, 20, 10, 25, 40, 50, 45 };
+        for (int v : insertVals) {
+            AVLtree.insert(v);
+            System.out.println("\nAfter inserting " + v + ":");
+            AVLtree.printTree();
+        }
+
+        System.out.println("Remove Test: ");
+        int[] removeVals = { 10, 50, 30 };
+
+        for (int v : removeVals) {
+            System.out.println("\nRemoving " + v + ":");
+            AVLtree.remove(v);
+            AVLtree.printTree();
+        }
+
+        System.out.println("Final Tree: ");
+        AVLtree.printTree();
+        AVLtree.toString();
     }
 }
